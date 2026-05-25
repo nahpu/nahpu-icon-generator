@@ -234,3 +234,6 @@ font-output/
 *.pfb
 *.pfm
 *.pfb
+
+# Scratch directory
+scratch/

@@ -8,6 +8,8 @@ from fontTools.svgLib.path import SVGPath
 from fontTools.pens.transformPen import TransformPen
 from fontTools.misc.transform import Transform
 
+
+
 def get_svg_dimensions(filepath):
     try:
         tree = ET.parse(filepath)
@@ -24,7 +26,7 @@ def get_svg_dimensions(filepath):
 
 def generate_dart_class(mappings, font_name, output_path):
     dart_code = [
-        "// GENERATED CODE - DO NOT MODIFY BY HAND",
+        "// GENERATED CODE - EDIT WITH CAUTION!!!",
         "import 'package:flutter/widgets.dart';",
         "",
         f"class {font_name} {{",
@@ -35,10 +37,16 @@ def generate_dart_class(mappings, font_name, output_path):
     ]
 
     for icon_name, codepoint in mappings.items():
-        # Clean up icon name to be a valid Dart variable name
-        safe_name = "".join(c if c.isalnum() else '_' for c in icon_name)
+        # Clean up icon name to be a valid Dart variable name (lowerCamelCase)
+        clean_name = "".join(c if c.isalnum() else '_' for c in icon_name)
+        parts = [p for p in clean_name.split('_') if p]
+        if not parts:
+            safe_name = "icon"
+        else:
+            safe_name = parts[0].lower() + "".join(p.title() for p in parts[1:])
+            
         if safe_name[0].isdigit():
-            safe_name = "icon_" + safe_name
+            safe_name = "icon" + safe_name.title()
         
         hex_code = hex(codepoint)
         dart_code.append(f"  static const IconData {safe_name} = IconData({hex_code}, fontFamily: _fontFamily);")
