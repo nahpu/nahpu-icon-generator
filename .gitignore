@@ -237,3 +237,8 @@ font-output/
 
 # Scratch directory
 scratch/
+
+# node
+node_modules/
+package-lock.json
+package.json

@@ -13,11 +13,12 @@ This project uses `uv` for dependency management.
 2. Run the command-line application:
 
 ```bash
-uv run python main.py --input svg --output font-output/icon_font.ttf --font-name NahpuIcons
+uv run python main.py --input svg --output font-output/icon_font.ttf --font-name NahpuIcons --weight 1.5
 ```
 
 The script will:
 - Map each SVG to a Unicode Private Use Area (PUA) codepoint starting from `U+E000` sequentially.
+- Automatically expand the stroke of `_outlined.svg` files to the specified `--weight` (default: 1.5).
 - Generate a TrueType Font file (`icon_font.ttf`) in the output directory.
 - Automatically generate a Dart class file (`nahpu_icons.dart`) containing the `IconData` mappings, ready to be used in your Flutter project.
 

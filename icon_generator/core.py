@@ -8,8 +8,100 @@ import ufo2ft
 from fontTools.svgLib.path import SVGPath
 from fontTools.pens.transformPen import TransformPen
 from fontTools.misc.transform import Transform
+import svgelements
+from shapely.geometry import LineString, Polygon
+from shapely.ops import unary_union
 
+def segment_to_points(segment, steps=15):
+    points = []
+    for i in range(steps + 1):
+        t = i / steps
+        p = segment.point(t)
+        points.append((p.x, p.y))
+    return points
 
+def svg_element_to_shapely(element):
+    try:
+        path = svgelements.Path(element)
+    except Exception:
+        return None
+        
+    all_geoms = []
+    current_subpath = []
+    
+    for segment in path:
+        if isinstance(segment, svgelements.Move):
+            if current_subpath:
+                if len(current_subpath) >= 2:
+                    all_geoms.append(LineString(current_subpath))
+                current_subpath = []
+            p = segment.end
+            current_subpath.append((p.x, p.y))
+        elif isinstance(segment, svgelements.Close):
+            if current_subpath:
+                current_subpath.append(current_subpath[0])
+                if len(current_subpath) >= 2:
+                    all_geoms.append(LineString(current_subpath))
+                current_subpath = []
+        else:
+            pts = segment_to_points(segment)
+            if current_subpath:
+                current_subpath.extend(pts[1:])
+            else:
+                current_subpath.extend(pts)
+                
+    if current_subpath and len(current_subpath) >= 2:
+        all_geoms.append(LineString(current_subpath))
+        
+    return all_geoms
+
+def polygon_to_svg_path(polygon):
+    path_segments = []
+    
+    def ring_to_svg(ring):
+        coords = list(ring.coords)
+        if not coords:
+            return ""
+        seg = [f"M {coords[0][0]:.3f} {coords[0][1]:.3f}"]
+        for pt in coords[1:]:
+            seg.append(f"L {pt[0]:.3f} {pt[1]:.3f}")
+        seg.append("Z")
+        return " ".join(seg)
+        
+    if polygon.geom_type == 'Polygon':
+        path_segments.append(ring_to_svg(polygon.exterior))
+        for interior in polygon.interiors:
+            path_segments.append(ring_to_svg(interior))
+    elif polygon.geom_type == 'MultiPolygon':
+        for poly in polygon.geoms:
+            path_segments.append(ring_to_svg(poly.exterior))
+            for interior in poly.interiors:
+                path_segments.append(ring_to_svg(interior))
+                
+    return " ".join(filter(None, path_segments))
+
+def load_and_outline_svg(filepath, weight):
+    if not filepath.endswith('_outlined.svg'):
+        return SVGPath(filepath)
+        
+    svg = svgelements.SVG.parse(filepath)
+    geometries_to_union = []
+    
+    for element in svg.elements():
+        if isinstance(element, (svgelements.Path, svgelements.Rect, svgelements.Circle, svgelements.Ellipse, svgelements.Line, svgelements.Polyline, svgelements.Polygon)):
+            lines = svg_element_to_shapely(element)
+            if lines:
+                for line in lines:
+                    buffered = line.buffer(weight / 2.0, join_style=1, cap_style=1)
+                    geometries_to_union.append(buffered)
+                    
+    if geometries_to_union:
+        merged = unary_union(geometries_to_union)
+        path_d = polygon_to_svg_path(merged)
+        new_svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="{path_d}" /></svg>'
+        return SVGPath.fromstring(new_svg.encode('utf-8'))
+    else:
+        return SVGPath(filepath)
 
 def get_svg_dimensions(filepath):
     try:
@@ -62,7 +154,7 @@ def generate_dart_class(mappings, font_name, output_path):
     with open(output_path, "w") as f:
         f.write("\n".join(dart_code))
 
-def generate_font_and_dart(input_dir, output_font_path, font_name):
+def generate_font_and_dart(input_dir, output_font_path, font_name, weight=1.5):
     if not os.path.exists(input_dir):
         print(f"Error: Input directory '{input_dir}' does not exist.")
         return False
@@ -102,11 +194,16 @@ def generate_font_and_dart(input_dir, output_font_path, font_name):
         scale_factor_x = 1000 / width
         scale_factor = min(scale_factor_x, scale_factor_y)
         
-        x_offset = (1000 - (width * scale_factor)) / 2
-        t = Transform().translate(x_offset, 800).scale(scale_factor, -scale_factor)
+        # Scale up by 1.15 to match the optical size of Material Design Icons (reduces excess padding)
+        scale_multiplier = 1.15
+        scaled_factor = scale_factor * scale_multiplier
+        
+        x_offset = (1000 - (width * scaled_factor)) / 2
+        y_translation = 300 + 500 * scale_multiplier
+        t = Transform().translate(x_offset, y_translation).scale(scaled_factor, -scaled_factor)
         
         try:
-            svg_path = SVGPath(filepath)
+            svg_path = load_and_outline_svg(filepath, weight)
             pen = glyph.getPen()
             tpen = TransformPen(pen, t)
             svg_path.draw(tpen)

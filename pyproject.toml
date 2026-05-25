@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fonttools>=4.63.0",
+    "shapely>=2.1.2",
     "svgelements>=1.9.6",
     "ufo2ft>=3.7.3",
     "ufolib2>=0.18.1",
