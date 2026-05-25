@@ -27,6 +27,10 @@ def get_svg_dimensions(filepath):
 def generate_dart_class(mappings, font_name, output_path):
     dart_code = [
         "// GENERATED CODE - EDIT WITH CAUTION!!!",
+        "",
+        "// See https://github.com/nahpu/nahpu-icon-generator for more information.",
+        "// Use the repo to generate more icons and update here.",
+        "",
         "import 'package:flutter/widgets.dart';",
         "",
         f"class {font_name} {{",
