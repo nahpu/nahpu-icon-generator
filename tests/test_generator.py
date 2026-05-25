@@ -49,7 +49,7 @@ def test_generate_font_and_dart(dummy_svg_dir, tmp_path):
     assert output_font.exists()
     
     # Check that Dart file was generated
-    dart_file = tmp_path / "output" / "testicons.dart"
+    dart_file = tmp_path / "output" / "test_icons.dart"
     assert dart_file.exists()
     
     dart_content = dart_file.read_text()

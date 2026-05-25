@@ -1,6 +1,7 @@
 import glob
 import os
 import xml.etree.ElementTree as ET
+import re
 
 import ufoLib2
 import ufo2ft
@@ -122,7 +123,10 @@ def generate_font_and_dart(input_dir, output_font_path, font_name):
     ttf.save(output_font_path)
     print(f"Success! Font saved to {output_font_path}")
 
-    dart_output_path = os.path.join(os.path.dirname(os.path.abspath(output_font_path)), f"{font_name.lower()}.dart")
+    # Convert font_name to snake_case for the filename
+    dart_output_name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', font_name)
+    dart_output_name = re.sub('([a-z0-9])([A-Z])', r'\1_\2', dart_output_name).lower()
+    dart_output_path = os.path.join(os.path.dirname(os.path.abspath(output_font_path)), f"{dart_output_name}.dart")
     generate_dart_class(mappings, font_name, dart_output_path)
     print(f"Generated Dart class at {dart_output_path}")
 
