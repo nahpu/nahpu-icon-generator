@@ -216,3 +216,21 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# macOS
+.DS_Store
+
+# Data and output directories
+svg/
+font-output/
+
+# File format
+*.svg
+*.ttf
+*.otf
+*.woff
+*.woff2
+*.eot
+*.pfb
+*.pfm
+*.pfb
