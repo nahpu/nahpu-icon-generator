@@ -1,4 +1,7 @@
 # nahpu-icon-generator
+
+[![Tests](https://github.com/nahpu/nahpu-icon-generator/actions/workflows/test.yml/badge.svg)](https://github.com/nahpu/nahpu-icon-generator/actions/workflows/test.yml)
+
 Generate a TrueType font (`.ttf`) from a directory of SVG files. Used internally for the NAHPU app to create custom Flutter icon fonts.
 
 ## Requirements
