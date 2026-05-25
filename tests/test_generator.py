@@ -54,8 +54,8 @@ def test_generate_font_and_dart(dummy_svg_dir, tmp_path):
     
     dart_content = dart_file.read_text()
     assert "class TestIcons" in dart_content
-    assert "static const IconData icon_one = IconData(" in dart_content
-    assert "static const IconData icon_two = IconData(" in dart_content
+    assert "static const IconData iconOne = IconData(" in dart_content
+    assert "static const IconData iconTwo = IconData(" in dart_content
 
 def test_generate_empty_dir(tmp_path):
     empty_dir = tmp_path / "empty"
