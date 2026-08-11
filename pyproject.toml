@@ -1,23 +1,40 @@
 [project]
 name = "nahpu-icon-generator"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.0"
+description = "Build the NAHPU icon font and Flutter Dart bindings from SVG sources"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fonttools>=4.63.0",
     "shapely>=2.1.2",
+    "skia-pathops>=0.8.0",
     "svgelements>=1.9.6",
     "ufo2ft>=3.7.3",
     "ufolib2>=0.18.1",
 ]
 
+[project.optional-dependencies]
+specimen = [
+    "reportlab>=4.2",
+]
+
+[project.scripts]
+nahpu-icons = "icon_generator.cli:main"
+
 [dependency-groups]
 dev = [
     "pytest>=9.0.3",
+    "ruff>=0.14.0",
 ]
 
 [tool.pytest.ini_options]
 pythonpath = [
   "."
 ]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

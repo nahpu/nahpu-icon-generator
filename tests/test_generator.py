@@ -1,10 +1,12 @@
-import os
 import pytest
-from icon_generator.core import get_svg_dimensions, generate_font_and_dart
+
+from icon_generator.core import generate_font_and_dart, get_svg_dimensions
+
 
 @pytest.fixture
 def dummy_svg(tmp_path):
-    svg_content = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+    svg_content = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+     width="24" height="24">
   <path d="M12 2L2 22h20L12 2z"/>
 </svg>"""
     file_path = tmp_path / "dummy.svg"

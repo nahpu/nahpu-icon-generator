@@ -220,12 +220,10 @@ __marimo__/
 # macOS
 .DS_Store
 
-# Data and output directories
-svg/
+# Generated output. The SVGs in svg/ are hand-authored sources and ARE tracked.
 font-output/
 
 # File format
-*.svg
 *.ttf
 *.otf
 *.woff

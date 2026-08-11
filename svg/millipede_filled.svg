@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+     fill="currentColor" stroke="currentColor" stroke-width="2"
+     stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd">
+  <path d="M 19.6 12 a 7.6 7.6 0 1 0 -3.6 6.5 l -1.6 -2.6 a 4.6 4.6 0 1 1 2.2 -3.9 z" />
+  <path fill="none" d="M 17.1 6.9 L 18.7 5.3" />
+  <path fill="none" d="M 12 4.8 V 2.6" />
+  <path fill="none" d="M 6.9 6.9 L 5.3 5.3" />
+  <path fill="none" d="M 4.8 12 H 2.6" />
+  <path fill="none" d="M 6.9 17.1 L 5.3 18.7" />
+  <path fill="none" d="M 12 19.2 V 21.4" />
+  <circle fill="none" cx="18" cy="10.6" r="0.6" />
+  <path fill="none" d="M 19.4 9.6 L 21.4 8" />
+</svg>

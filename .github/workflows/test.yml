@@ -26,5 +26,11 @@ jobs:
       - name: Install the project
         run: uv sync --all-extras --dev
 
+      - name: Lint Python
+        run: uv run ruff check .
+
+      - name: Lint SVG sources
+        run: uv run python main.py lint
+
       - name: Run tests
         run: uv run pytest
