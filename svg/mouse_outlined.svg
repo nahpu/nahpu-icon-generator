@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
      fill="none" stroke="currentColor" stroke-width="2"
      stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd">
-  <path d="M 20.1264,14.2705 L 16.4575,11.4751 C 15.5839,10.4268 14.0115,9.72793 12.3517,9.72793 C 9.38156,9.72793 7.02293,12.0866 7.02293,14.9693 C 7.02293,16.6291 8.33328,17.9395 9.99306,17.9395 L 16.9816,17.9395 C 18.7287,17.9395 20.1264,16.5418 20.1264,14.7946 Z" />
-  <circle data-role="ear" cx="13.1379" cy="8.33022" r="2.27127" />
-  <circle data-role="eye" fill="currentColor" stroke="none" cx="16.2827" cy="13.5716" r="0.655175" />
-  <path data-role="tail" fill="none" d="M 7.19764,15.6682 C 4.75166,15.8429 3.35395,13.9211 4.0528,11.6498 C 4.6643,9.64057 6.84822,8.59229 8.77006,9.29115" />
+  <path d="M 7,16 C 7,12 9.5,9.8 13,9.8 C 16,9.8 18,11.5 18.5,13 L 21,14.2 L 18.5,15.5 C 17.8,18 15.5,19 12,19 C 9,19 7,18 7,16 Z" />
+  <circle data-role="ear" cx="11.5" cy="8.5" r="3" />
+  <circle data-role="eye" fill="currentColor" stroke="none" cx="16.5" cy="12.8" r="0.75" />
+  <path data-role="tail" fill="none" d="M 7.2,16.2 C 5,17.2 3.2,15.8 4,13.5" />
 </svg>

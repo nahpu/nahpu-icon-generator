@@ -1,8 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
      fill="currentColor" stroke="currentColor" stroke-width="2"
      stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd">
-  <path d="M 20.1636,14.1354 L 15.8091,10.9532 C 14.9717,10.0321 13.4643,9.4459 11.957,9.4459 C 9.19357,9.4459 7.10004,11.5394 7.10004,14.3029 C 7.10004,15.9777 8.35616,17.3175 10.031,17.3175 L 16.9815,17.3175 C 18.6563,17.3175 20.1636,15.8102 20.1636,14.1354 Z" />
-  <circle data-role="ear" cx="12.292" cy="8.35727" r="1.67482" />
-  <circle data-role="eye" fill="currentColor" stroke="none" cx="15.6416" cy="13.298" r="0.628056" />
-  <path data-role="tail" fill="none" d="M 7.18379,15.1403 C 4.58782,15.3078 3.24797,13.1305 4.08537,10.7858 C 4.83904,8.69224 7.26753,7.60361 9.27731,8.44101" />
+  <path d="M 4.5,16 C 4.5,11 7.5,7.5 12,7.5 C 13,7.5 14,7.8 15,8.5 C 14,7 14.8,5.5 16.2,5.5 C 17.8,5.5 18.5,7 17.8,8.5 C 19.2,9.2 20.2,10.5 21,12 L 18,13.5 C 17,15.5 14.5,17 11,17.5 C 8,18 5.5,17.5 4.5,16 Z" />
+  <circle data-role="ear" cx="15.8" cy="7.3" r="1.8" />
+  <circle data-role="eye" fill="currentColor" stroke="none" cx="18.2" cy="10.5" r="0.7" />
+  <path data-role="tail" fill="none" d="M 5,16 C 3,15.5 2.8,18.5 5.2,19.5 C 7.5,20.5 9.5,18.5 12.5,20" />
+  <path data-role="leg" d="M 8,16 L 7,18.8 L 11,18.8 L 10,17 Z" />
+  <path data-role="leg" d="M 15,15 L 16,18.5 L 19,18.5 L 18,17 L 17,14 Z" />
 </svg>

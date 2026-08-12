@@ -27,10 +27,10 @@ wings = 0
 note = "Worker ant: six legs on the mesosoma, elbowed antennae, no wings."
 
 [bat]
-legs = 2
+legs = 0
 antennae = 0
-wings = 2
-note = "The wings are the forelimbs; legs = the two hind feet."
+wings = 0
+note = "Head-on view: spread scalloped wings and pointed ears incorporated into the unified silhouette."
 
 [beetle]
 legs = 6
@@ -88,13 +88,13 @@ note = "Legs omitted for legibility; the two wings are the dipteran field mark."
 legs = 0
 antennae = 0
 wings = 0
-note = "Skull, spine and ribs only - an articulated skeleton, not a whole animal."
+note = "Fossil shark tooth centered inside a smooth asymmetric rock border; only the tooth fills in the filled variant."
 
 [frog]
 legs = 2
 antennae = 0
 wings = 0
-note = "Lateral crouch: one foreleg and the folded hind limb are visible."
+note = "Head-on crouch: two folded hind limbs are visible; forelegs are omitted for legibility."
 
 [lizard]
 legs = 4
@@ -129,7 +129,7 @@ note = "Wings are the silhouette. Feathered antennae separate it from the butter
 legs = 0
 antennae = 0
 wings = 0
-note = "Shape-led: the compact body, oversized ear and short tail carry the mark, so no leg strokes compete with them."
+note = "Shape-led: compact body, short snout, oversized round ear, and short curved tail."
 
 [nest]
 legs = 0
@@ -137,10 +137,10 @@ antennae = 0
 wings = 0
 
 [rat]
-legs = 0
+legs = 2
 antennae = 0
 wings = 0
-note = "Shape-led like the mouse; the long curling tail and small ear are the field marks."
+note = "Lateral crouch: arched body, small ear, two visible legs, and a long looping tail."
 
 [salamander]
 legs = 4
@@ -148,10 +148,10 @@ antennae = 0
 wings = 0
 
 [shrew]
-legs = 0
+legs = 2
 antennae = 0
 wings = 0
-note = "Shape-led; the long pointed snout and absent ear are the field marks."
+note = "Lateral profile: two visible legs, long pointed snout, and no visible ear."
 
 [skull]
 legs = 0
@@ -162,7 +162,7 @@ wings = 0
 legs = 0
 antennae = 0
 wings = 0
-note = "Limbless, and that is the field mark."
+note = "Limbless, smooth S-coiled body with head, eye, and forked tongue."
 
 [spider]
 legs = 8

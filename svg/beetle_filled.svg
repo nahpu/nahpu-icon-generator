@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
      fill="currentColor" stroke="currentColor" stroke-width="2"
      stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd">
-  <path d="M 12,5.18692 c -1.00935,0 -1.85047,0.672897 -2.1028,1.59813 c -0.925234,0.252336 -1.59813,1.09346 -1.59813,2.1028 l 0,0.336449 c -1.09346,1.17757 -1.76636,3.02804 -1.76636,5.04673 c 0,3.28037 1.68224,5.88785 3.78505,5.88785 l 3.36449,0 c 2.1028,0 3.78505,-2.60748 3.78505,-5.88785 c 0,-2.01869 -0.672897,-3.86916 -1.76636,-5.04673 l 0,-0.336449 c 0,-1.00935 -0.672897,-1.85047 -1.59813,-2.1028 C 13.8505,5.85981 13.0093,5.18692 12,5.18692 z" />
-  <path data-role="detail" fill="none" d="M 12,9.2243 L 12,19.8224" />
-  <path data-role="antenna" fill="none" d="M 10.6542,5.52336 L 8.97196,3.84112" />
-  <path data-role="antenna" fill="none" d="M 13.3458,5.52336 L 15.028,3.84112" />
-  <path data-role="leg" fill="none" d="M 8.13084,10.4019 L 4.26168,8.71963" />
-  <path data-role="leg" fill="none" d="M 7.28972,13.5981 L 4.09346,13.2617" />
-  <path data-role="leg" fill="none" d="M 8.13084,16.4579 L 4.76636,17.8037" />
-  <path data-role="leg" fill="none" d="M 15.8692,10.4019 L 19.7383,8.71963" />
-  <path data-role="leg" fill="none" d="M 16.7103,13.5981 L 19.9065,13.2617" />
-  <path data-role="leg" fill="none" d="M 15.8692,16.4579 L 19.2336,17.8037" />
+  <path d="M 12,5 C 11,5 10.2,5.7 10,6.6 C 9,6.9 8.3,7.7 8.3,8.7 L 8.3,9 C 7.2,10.2 6.5,12 6.5,14 C 6.5,17.3 8.2,20 10.3,20 L 13.7,20 C 15.8,20 17.5,17.3 17.5,14 C 17.5,12 16.8,10.2 15.7,9 L 15.7,8.7 C 15.7,7.7 15,6.9 14,6.6 C 13.8,5.7 13,5 12,5 Z" />
+  <path data-role="detail" fill="none" d="M 12,9 L 12,20" />
+  <path data-role="antenna" fill="none" d="M 10.7,5.5 L 9,3.8" />
+  <path data-role="antenna" fill="none" d="M 13.3,5.5 L 15,3.8" />
+  <path data-role="leg" fill="none" d="M 8.1,10.4 L 4.3,8.7" />
+  <path data-role="leg" fill="none" d="M 7.3,13.6 L 4.1,13.3" />
+  <path data-role="leg" fill="none" d="M 8.1,16.5 L 4.8,17.8" />
+  <path data-role="leg" fill="none" d="M 15.9,10.4 L 19.7,8.7" />
+  <path data-role="leg" fill="none" d="M 16.7,13.6 L 19.9,13.3" />
+  <path data-role="leg" fill="none" d="M 15.9,16.5 L 19.2,17.8" />
 </svg>

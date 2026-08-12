@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
      fill="currentColor" stroke="currentColor" stroke-width="2"
      stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd">
-  <path d="M 11.8227,6.76867 c -1.68482,0 -3.01493,1.33012 -3.01493,3.01493 c 0,0.532047 0.0886745,0.97542 0.354698,1.41879 c -0.532047,0.886745 -0.886745,2.03951 -0.886745,3.28096 c 0,2.74891 1.59614,4.8771 3.54698,4.8771 s 3.54698,-2.12819 3.54698,-4.8771 c 0,-1.24144 -0.354698,-2.39421 -0.886745,-3.28096 c 0.266024,-0.443373 0.354698,-0.886745 0.354698,-1.41879 c 0,-1.68482 -1.33012,-3.01493 -3.01493,-3.01493 z" />
-  <path data-role="wing" fill="none" d="M 9.51711,12.0891 C 7.21158,10.493 5.08339,10.1383 4.19664,11.2024 c -0.886745,1.06409 0.177349,3.01493 2.48289,4.43373" />
-  <path data-role="wing" fill="none" d="M 14.1282,12.0891 c 2.48289,-1.59614 4.78842,-1.95084 5.67517,-0.886745 c 0.886745,1.06409 -0.177349,3.01493 -2.48289,4.43373" />
-  <path data-role="antenna" fill="none" d="M 10.5812,7.12337 L 9.51711,4.64048" />
-  <path data-role="antenna" fill="none" d="M 13.0641,7.12337 L 14.1282,4.64048" />
+  <path d="M 12,4.5 C 9.5,4.5 8.5,6 9,8 C 8.5,9.5 8.5,11 9.5,12 C 8.5,15.5 10,19.5 12,19.5 C 14,19.5 15.5,15.5 14.5,12 C 15.5,11 15.5,9.5 15,8 C 15.5,6 14.5,4.5 12,4.5 Z" />
+  <circle data-role="eye" fill="currentColor" stroke="none" cx="10.5" cy="7" r="0.75" />
+  <circle data-role="eye" fill="currentColor" stroke="none" cx="13.5" cy="7" r="0.75" />
+  <path data-role="wing" fill="none" d="M 9.5,10.5 C 7,8.5 4,8.5 3.5,10.5 C 4,13 6.5,15 9.5,13 Z" />
+  <path data-role="wing" fill="none" d="M 14.5,10.5 C 17,8.5 20,8.5 20.5,10.5 C 20,13 17.5,15 14.5,13 Z" />
+  <path data-role="antenna" fill="none" d="M 10.5,5 L 9,3.5" />
+  <path data-role="antenna" fill="none" d="M 13.5,5 L 15,3.5" />
 </svg>

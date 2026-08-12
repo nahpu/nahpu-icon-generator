@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
      fill="currentColor" stroke="currentColor" stroke-width="2"
      stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd">
-  <path d="M 12,4.42554 a 2.1388,2.1388 0 0,0 0,4.27761 a 2.1388,2.1388 0 0,0 0,-4.27761 z M 12,9.23785 a 1.96057,1.96057 0 0,0 0,3.92114 a 1.96057,1.96057 0 0,0 0,-3.92114 z M 12,13.6937 a 2.85174,3.20821 0 1,0 0,6.41641 a 2.85174,3.20821 0 1,0 0,-6.41641 z" />
-  <path data-role="antenna" fill="none" d="M 10.9306,4.60377 L 9.50473,3.89084" />
-  <path data-role="antenna" fill="none" d="M 13.0694,4.60377 L 14.4953,3.89084" />
-  <path data-role="leg" fill="none" d="M 10.0394,9.95079 L 7.00946,8.34668" />
-  <path data-role="leg" fill="none" d="M 10.0394,11.9114 L 6.65299,12.8025" />
-  <path data-role="leg" fill="none" d="M 10.3959,12.9808 L 7.90062,15.8325" />
-  <path data-role="leg" fill="none" d="M 13.9606,9.95079 L 16.9905,8.34668" />
-  <path data-role="leg" fill="none" d="M 13.9606,11.9114 L 17.347,12.8025" />
-  <path data-role="leg" fill="none" d="M 13.6041,12.9808 L 16.0994,15.8325" />
+  <path d="M 12,4 C 10.5,4 9.5,5 9.5,6.5 C 9.5,8 10.5,9 12,9 C 13.5,9 14.5,8 14.5,6.5 C 14.5,5 13.5,4 12,4 Z M 12,9.5 C 10.5,9.5 9.5,10.5 9.5,12 C 9.5,13.5 10.5,14 12,14 C 13.5,14 14.5,13.5 14.5,12 C 14.5,10.5 13.5,9.5 12,9.5 Z M 12,14.5 C 9.5,14.5 8.5,16.5 8.5,18 C 8.5,20 10,21 12,21 C 14,21 15.5,20 15.5,18 C 15.5,16.5 14.5,14.5 12,14.5 Z" />
+  <path data-role="antenna" fill="none" d="M 10.5,5 L 8.5,3.5 L 7.5,5" />
+  <path data-role="antenna" fill="none" d="M 13.5,5 L 15.5,3.5 L 16.5,5" />
+  <path data-role="leg" fill="none" d="M 9.5,10.5 L 6.5,8 L 4.5,9" />
+  <path data-role="leg" fill="none" d="M 9.5,12 L 6,12 L 4,10.5" />
+  <path data-role="leg" fill="none" d="M 10,13.5 L 7,16 L 5,15.5" />
+  <path data-role="leg" fill="none" d="M 14.5,10.5 L 17.5,8 L 19.5,9" />
+  <path data-role="leg" fill="none" d="M 14.5,12 L 18,12 L 20,10.5" />
+  <path data-role="leg" fill="none" d="M 14,13.5 L 17,16 L 19,15.5" />
 </svg>

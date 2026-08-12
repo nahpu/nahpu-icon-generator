@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
      fill="currentColor" stroke="currentColor" stroke-width="2"
      stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd">
-  <path d="M 12,7.45374 a 5.70369,5.70369 0 0,0 0,11.4074 a 5.70369,5.70369 0 0,0 0,-11.4074 z" />
-  <circle data-role="head" cx="12" cy="5.84957" r="1.96064" />
-  <circle data-role="eye" fill="currentColor" stroke="none" cx="10.9306" cy="5.40397" r="0.668401" />
-  <circle data-role="detail" fill="none" cx="12" cy="13.1574" r="2.85184" />
-  <path data-role="leg" fill="none" d="M 16.5451,9.14702 L 19.4861,6.74078" />
-  <path data-role="leg" fill="none" d="M 7.45487,9.14702 L 4.51391,6.74078" />
-  <path data-role="leg" fill="none" d="M 16.9907,16.7222 L 19.6643,18.6829" />
-  <path data-role="leg" fill="none" d="M 7.00927,16.7222 L 4.33567,18.6829" />
-  <path data-role="tail" fill="none" d="M 12,18.8611 l 0,1.24768" />
+  <path d="M 12,6.5 C 8.5,6.5 6.5,9 6.5,13 C 6.5,17 8.5,19.5 12,19.5 C 15.5,19.5 17.5,17 17.5,13 C 17.5,9 15.5,6.5 12,6.5 Z" />
+  <circle data-role="head" cx="12" cy="4.5" r="1.5" />
+  <path data-role="leg" d="M 7.5,9 L 4,7.5 L 5,11 Z" />
+  <path data-role="leg" d="M 16.5,9 L 20,7.5 L 19,11 Z" />
+  <path data-role="leg" d="M 7,15.5 L 4,18 L 6,19 Z" />
+  <path data-role="leg" d="M 17,15.5 L 20,18 L 18,19 Z" />
+  <path data-role="tail" d="M 11,19 L 12,21 L 13,19 Z" />
+  <ellipse data-role="detail" fill="none" cx="12" cy="13" rx="3.5" ry="4" />
 </svg>
