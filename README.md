@@ -8,7 +8,7 @@ actually be reviewed. Used internally by the [NAHPU](https://github.com/nahpu/na
 
 The set covers the taxa NAHPU catalogues — mammals, birds, herpetofauna,
 arthropods — plus fish, vertebrate fossils, and a few specimen-handling marks.
-33 families, each with an outlined and a filled variant.
+31 families, each with an outlined and a filled variant.
 
 ## Requirements
 
@@ -68,6 +68,14 @@ attribute set, constructs the font pipeline cannot represent, ink staying on the
 canvas, and that each outlined icon has a filled twin differing only in the root
 `fill`. See [docs/DESIGN.md](docs/DESIGN.md) for the full contract.
 
+It also checks **anatomy**. `anatomy.toml` records how many legs, antennae and
+wings each family draws, and lint fails if the art disagrees — so an edit that
+drops one of the spider's eight legs breaks the build instead of shipping. The
+counts are of drawn elements rather than of the animal, because view and
+legibility legitimately change them (a flea in profile shows three legs, not
+six); entries where those differ carry a `note` explaining why. Pass
+`--anatomy PATH` to check against a different manifest.
+
 ## Codepoints renumber when the set changes
 
 Codepoints are assigned in **alphabetical filename order** starting at `U+E000`.
@@ -82,9 +90,9 @@ animals rather than failing loudly.
 
 | Group | Families |
 | --- | --- |
-| Mammals | `bat`, `mouse`, `rat`, `shrew`, `mammal` |
-| Birds | `bird`, `egg`, `nest` |
-| Herps | `amphibian`, `frog`, `salamander`, `snake`, `lizard`, `turtle` |
+| Mammals | `bat`, `mouse`, `rat`, `shrew` |
+| Birds | `bird` (parrot), `egg`, `nest` |
+| Herps | `frog`, `salamander`, `snake`, `lizard`, `turtle` |
 | Fish | `fish` |
 | Fossils | `fossil` |
 | Arachnids and parasites | `mite`, `tick`, `spider`, `flea`, `louse` |
@@ -92,91 +100,90 @@ animals rather than failing loudly.
 | Myriapods | `millipede` |
 | Specimen handling | `skull`, `bone`, `vial`, `tag` |
 
-NAHPU's `matchCatFmtToIcon` currently uses `bird`, `rat`, `amphibian`, and
-`mite` for its four `CatalogFmt` values.
+NAHPU's `matchCatFmtToIcon` uses `bird`, `rat`, `frog`, and `beetle` for its
+four `CatalogFmt` values.
 
 <details>
 <summary>Full codepoint table</summary>
 
 | Icon | Dart constant | Codepoint |
 | --- | --- | --- |
-| `amphibian_filled` | `NahpuIcons.amphibianFilled` | U+E000 |
-| `amphibian_outlined` | `NahpuIcons.amphibianOutlined` | U+E001 |
-| `ant_filled` | `NahpuIcons.antFilled` | U+E002 |
-| `ant_outlined` | `NahpuIcons.antOutlined` | U+E003 |
-| `bat_filled` | `NahpuIcons.batFilled` | U+E004 |
-| `bat_outlined` | `NahpuIcons.batOutlined` | U+E005 |
-| `beetle_filled` | `NahpuIcons.beetleFilled` | U+E006 |
-| `beetle_outlined` | `NahpuIcons.beetleOutlined` | U+E007 |
-| `bird_filled` | `NahpuIcons.birdFilled` | U+E008 |
-| `bird_outlined` | `NahpuIcons.birdOutlined` | U+E009 |
-| `bone_filled` | `NahpuIcons.boneFilled` | U+E00A |
-| `bone_outlined` | `NahpuIcons.boneOutlined` | U+E00B |
-| `butterfly_filled` | `NahpuIcons.butterflyFilled` | U+E00C |
-| `butterfly_outlined` | `NahpuIcons.butterflyOutlined` | U+E00D |
-| `dragonfly_filled` | `NahpuIcons.dragonflyFilled` | U+E00E |
-| `dragonfly_outlined` | `NahpuIcons.dragonflyOutlined` | U+E00F |
-| `egg_filled` | `NahpuIcons.eggFilled` | U+E010 |
-| `egg_outlined` | `NahpuIcons.eggOutlined` | U+E011 |
-| `fish_filled` | `NahpuIcons.fishFilled` | U+E012 |
-| `fish_outlined` | `NahpuIcons.fishOutlined` | U+E013 |
-| `flea_filled` | `NahpuIcons.fleaFilled` | U+E014 |
-| `flea_outlined` | `NahpuIcons.fleaOutlined` | U+E015 |
-| `fly_filled` | `NahpuIcons.flyFilled` | U+E016 |
-| `fly_outlined` | `NahpuIcons.flyOutlined` | U+E017 |
-| `fossil_filled` | `NahpuIcons.fossilFilled` | U+E018 |
-| `fossil_outlined` | `NahpuIcons.fossilOutlined` | U+E019 |
-| `frog_filled` | `NahpuIcons.frogFilled` | U+E01A |
-| `frog_outlined` | `NahpuIcons.frogOutlined` | U+E01B |
-| `lizard_filled` | `NahpuIcons.lizardFilled` | U+E01C |
-| `lizard_outlined` | `NahpuIcons.lizardOutlined` | U+E01D |
-| `louse_filled` | `NahpuIcons.louseFilled` | U+E01E |
-| `louse_outlined` | `NahpuIcons.louseOutlined` | U+E01F |
-| `mammal_filled` | `NahpuIcons.mammalFilled` | U+E020 |
-| `mammal_outlined` | `NahpuIcons.mammalOutlined` | U+E021 |
-| `millipede_filled` | `NahpuIcons.millipedeFilled` | U+E022 |
-| `millipede_outlined` | `NahpuIcons.millipedeOutlined` | U+E023 |
-| `mite_filled` | `NahpuIcons.miteFilled` | U+E024 |
-| `mite_outlined` | `NahpuIcons.miteOutlined` | U+E025 |
-| `moth_filled` | `NahpuIcons.mothFilled` | U+E026 |
-| `moth_outlined` | `NahpuIcons.mothOutlined` | U+E027 |
-| `mouse_filled` | `NahpuIcons.mouseFilled` | U+E028 |
-| `mouse_outlined` | `NahpuIcons.mouseOutlined` | U+E029 |
-| `nest_filled` | `NahpuIcons.nestFilled` | U+E02A |
-| `nest_outlined` | `NahpuIcons.nestOutlined` | U+E02B |
-| `rat_filled` | `NahpuIcons.ratFilled` | U+E02C |
-| `rat_outlined` | `NahpuIcons.ratOutlined` | U+E02D |
-| `salamander_filled` | `NahpuIcons.salamanderFilled` | U+E02E |
-| `salamander_outlined` | `NahpuIcons.salamanderOutlined` | U+E02F |
-| `shrew_filled` | `NahpuIcons.shrewFilled` | U+E030 |
-| `shrew_outlined` | `NahpuIcons.shrewOutlined` | U+E031 |
-| `skull_filled` | `NahpuIcons.skullFilled` | U+E032 |
-| `skull_outlined` | `NahpuIcons.skullOutlined` | U+E033 |
-| `snake_filled` | `NahpuIcons.snakeFilled` | U+E034 |
-| `snake_outlined` | `NahpuIcons.snakeOutlined` | U+E035 |
-| `spider_filled` | `NahpuIcons.spiderFilled` | U+E036 |
-| `spider_outlined` | `NahpuIcons.spiderOutlined` | U+E037 |
-| `tag_filled` | `NahpuIcons.tagFilled` | U+E038 |
-| `tag_outlined` | `NahpuIcons.tagOutlined` | U+E039 |
-| `tick_filled` | `NahpuIcons.tickFilled` | U+E03A |
-| `tick_outlined` | `NahpuIcons.tickOutlined` | U+E03B |
-| `turtle_filled` | `NahpuIcons.turtleFilled` | U+E03C |
-| `turtle_outlined` | `NahpuIcons.turtleOutlined` | U+E03D |
-| `vial_filled` | `NahpuIcons.vialFilled` | U+E03E |
-| `vial_outlined` | `NahpuIcons.vialOutlined` | U+E03F |
-| `wasp_filled` | `NahpuIcons.waspFilled` | U+E040 |
-| `wasp_outlined` | `NahpuIcons.waspOutlined` | U+E041 |
+| `ant_filled` | `NahpuIcons.antFilled` | U+E000 |
+| `ant_outlined` | `NahpuIcons.antOutlined` | U+E001 |
+| `bat_filled` | `NahpuIcons.batFilled` | U+E002 |
+| `bat_outlined` | `NahpuIcons.batOutlined` | U+E003 |
+| `beetle_filled` | `NahpuIcons.beetleFilled` | U+E004 |
+| `beetle_outlined` | `NahpuIcons.beetleOutlined` | U+E005 |
+| `bird_filled` | `NahpuIcons.birdFilled` | U+E006 |
+| `bird_outlined` | `NahpuIcons.birdOutlined` | U+E007 |
+| `bone_filled` | `NahpuIcons.boneFilled` | U+E008 |
+| `bone_outlined` | `NahpuIcons.boneOutlined` | U+E009 |
+| `butterfly_filled` | `NahpuIcons.butterflyFilled` | U+E00A |
+| `butterfly_outlined` | `NahpuIcons.butterflyOutlined` | U+E00B |
+| `dragonfly_filled` | `NahpuIcons.dragonflyFilled` | U+E00C |
+| `dragonfly_outlined` | `NahpuIcons.dragonflyOutlined` | U+E00D |
+| `egg_filled` | `NahpuIcons.eggFilled` | U+E00E |
+| `egg_outlined` | `NahpuIcons.eggOutlined` | U+E00F |
+| `fish_filled` | `NahpuIcons.fishFilled` | U+E010 |
+| `fish_outlined` | `NahpuIcons.fishOutlined` | U+E011 |
+| `flea_filled` | `NahpuIcons.fleaFilled` | U+E012 |
+| `flea_outlined` | `NahpuIcons.fleaOutlined` | U+E013 |
+| `fly_filled` | `NahpuIcons.flyFilled` | U+E014 |
+| `fly_outlined` | `NahpuIcons.flyOutlined` | U+E015 |
+| `fossil_filled` | `NahpuIcons.fossilFilled` | U+E016 |
+| `fossil_outlined` | `NahpuIcons.fossilOutlined` | U+E017 |
+| `frog_filled` | `NahpuIcons.frogFilled` | U+E018 |
+| `frog_outlined` | `NahpuIcons.frogOutlined` | U+E019 |
+| `lizard_filled` | `NahpuIcons.lizardFilled` | U+E01A |
+| `lizard_outlined` | `NahpuIcons.lizardOutlined` | U+E01B |
+| `louse_filled` | `NahpuIcons.louseFilled` | U+E01C |
+| `louse_outlined` | `NahpuIcons.louseOutlined` | U+E01D |
+| `millipede_filled` | `NahpuIcons.millipedeFilled` | U+E01E |
+| `millipede_outlined` | `NahpuIcons.millipedeOutlined` | U+E01F |
+| `mite_filled` | `NahpuIcons.miteFilled` | U+E020 |
+| `mite_outlined` | `NahpuIcons.miteOutlined` | U+E021 |
+| `moth_filled` | `NahpuIcons.mothFilled` | U+E022 |
+| `moth_outlined` | `NahpuIcons.mothOutlined` | U+E023 |
+| `mouse_filled` | `NahpuIcons.mouseFilled` | U+E024 |
+| `mouse_outlined` | `NahpuIcons.mouseOutlined` | U+E025 |
+| `nest_filled` | `NahpuIcons.nestFilled` | U+E026 |
+| `nest_outlined` | `NahpuIcons.nestOutlined` | U+E027 |
+| `rat_filled` | `NahpuIcons.ratFilled` | U+E028 |
+| `rat_outlined` | `NahpuIcons.ratOutlined` | U+E029 |
+| `salamander_filled` | `NahpuIcons.salamanderFilled` | U+E02A |
+| `salamander_outlined` | `NahpuIcons.salamanderOutlined` | U+E02B |
+| `shrew_filled` | `NahpuIcons.shrewFilled` | U+E02C |
+| `shrew_outlined` | `NahpuIcons.shrewOutlined` | U+E02D |
+| `skull_filled` | `NahpuIcons.skullFilled` | U+E02E |
+| `skull_outlined` | `NahpuIcons.skullOutlined` | U+E02F |
+| `snake_filled` | `NahpuIcons.snakeFilled` | U+E030 |
+| `snake_outlined` | `NahpuIcons.snakeOutlined` | U+E031 |
+| `spider_filled` | `NahpuIcons.spiderFilled` | U+E032 |
+| `spider_outlined` | `NahpuIcons.spiderOutlined` | U+E033 |
+| `tag_filled` | `NahpuIcons.tagFilled` | U+E034 |
+| `tag_outlined` | `NahpuIcons.tagOutlined` | U+E035 |
+| `tick_filled` | `NahpuIcons.tickFilled` | U+E036 |
+| `tick_outlined` | `NahpuIcons.tickOutlined` | U+E037 |
+| `turtle_filled` | `NahpuIcons.turtleFilled` | U+E038 |
+| `turtle_outlined` | `NahpuIcons.turtleOutlined` | U+E039 |
+| `vial_filled` | `NahpuIcons.vialFilled` | U+E03A |
+| `vial_outlined` | `NahpuIcons.vialOutlined` | U+E03B |
+| `wasp_filled` | `NahpuIcons.waspFilled` | U+E03C |
+| `wasp_outlined` | `NahpuIcons.waspOutlined` | U+E03D |
 
 </details>
 
 ## Adding an icon
 
-1. Draw `{family}_outlined.svg` following [docs/DESIGN.md](docs/DESIGN.md).
+1. Draw `{family}_outlined.svg` following [docs/DESIGN.md](docs/DESIGN.md), giving
+   every element after the silhouette a `data-role`.
 2. Copy it to `{family}_filled.svg`, changing only the root `fill` to `currentColor`.
-3. `uv run python main.py lint`
-4. `uv run python main.py build --specimen`
-5. Review the icon on the size-ramp pages of the specimen sheet.
-6. Commit both SVGs together, and regenerate the font and Dart class for NAHPU.
+3. Add a `[{family}]` entry to `anatomy.toml`.
+4. `uv run python main.py lint`
+5. `uv run python main.py build --specimen`
+6. Review the icon on the size-ramp pages of the specimen sheet.
+7. Commit the SVGs and `anatomy.toml` together, and regenerate the font and Dart
+   class for NAHPU.
 
 ## Using the font in Flutter
 

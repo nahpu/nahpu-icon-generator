@@ -1,0 +1,198 @@
+# Anatomy manifest.
+#
+# NAHPU is a natural-history app, so its taxon icons are read by people who know
+# what the animals look like. This file is the checked-in record of how many
+# limbs each mark draws, and `main.py lint` verifies it against the SVG sources
+# by counting elements with the matching `data-role`.
+#
+# Counts are of *drawn elements*, not of the animal's real anatomy, because the
+# two differ legitimately:
+#
+#   * View. A flea in lateral profile shows three legs, not six. A bird shows
+#     two because it has two.
+#   * Silhouette. Features drawn into the silhouette path cannot be counted -
+#     a butterfly's wings are part of its outline, so `wings = 0` there. Any
+#     limb that must be counted has to be a stroked element.
+#   * Legibility. Some marks deliberately omit limbs; those carry a `note`
+#     saying so, which is the whole point of this file. Without it an omission
+#     is indistinguishable from an oversight.
+#
+# Roles that are counted: leg, antenna, wing. Other roles (eye, ear, tail, head,
+# detail) are validated as known roles but not counted.
+
+[ant]
+legs = 6
+antennae = 2
+wings = 0
+note = "Worker ant: six legs on the mesosoma, elbowed antennae, no wings."
+
+[bat]
+legs = 2
+antennae = 0
+wings = 2
+note = "The wings are the forelimbs; legs = the two hind feet."
+
+[beetle]
+legs = 6
+antennae = 2
+wings = 0
+note = "Elytra are part of the silhouette, so no wing elements."
+
+[bird]
+legs = 2
+antennae = 0
+wings = 1
+note = "Parrot in lateral profile: two legs, one folded wing visible."
+
+[bone]
+legs = 0
+antennae = 0
+wings = 0
+
+[butterfly]
+legs = 0
+antennae = 2
+wings = 0
+note = "Wings are the silhouette. Legs omitted: six legs under those wings is mud at 16 px."
+
+[dragonfly]
+legs = 0
+antennae = 0
+wings = 4
+note = "Four separate wings. Legs omitted for legibility; antennae are vestigial anyway."
+
+[egg]
+legs = 0
+antennae = 0
+wings = 0
+
+[fish]
+legs = 0
+antennae = 0
+wings = 0
+note = "Fins are in the silhouette except the pectoral, which is a detail stroke."
+
+[flea]
+legs = 3
+antennae = 1
+wings = 0
+note = "Laterally compressed, so a profile shows three legs and one antenna, not six and two."
+
+[fly]
+legs = 0
+antennae = 2
+wings = 2
+note = "Legs omitted for legibility; the two wings are the dipteran field mark."
+
+[fossil]
+legs = 0
+antennae = 0
+wings = 0
+note = "Skull, spine and ribs only - an articulated skeleton, not a whole animal."
+
+[frog]
+legs = 2
+antennae = 0
+wings = 0
+note = "Lateral crouch: one foreleg and the folded hind limb are visible."
+
+[lizard]
+legs = 4
+antennae = 0
+wings = 0
+
+[louse]
+legs = 6
+antennae = 2
+wings = 0
+note = "Wingless ectoparasite; all six legs hook-tipped."
+
+[millipede]
+legs = 9
+antennae = 2
+wings = 0
+note = "Nine legs around the coil stand in for many; a literal count is not drawable here."
+
+[mite]
+legs = 8
+antennae = 0
+wings = 0
+note = "Adult acarine: four pairs, no antennae."
+
+[moth]
+legs = 0
+antennae = 2
+wings = 0
+note = "Wings are the silhouette. Feathered antennae separate it from the butterfly."
+
+[mouse]
+legs = 0
+antennae = 0
+wings = 0
+note = "Shape-led: the compact body, oversized ear and short tail carry the mark, so no leg strokes compete with them."
+
+[nest]
+legs = 0
+antennae = 0
+wings = 0
+
+[rat]
+legs = 0
+antennae = 0
+wings = 0
+note = "Shape-led like the mouse; the long curling tail and small ear are the field marks."
+
+[salamander]
+legs = 4
+antennae = 0
+wings = 0
+
+[shrew]
+legs = 0
+antennae = 0
+wings = 0
+note = "Shape-led; the long pointed snout and absent ear are the field marks."
+
+[skull]
+legs = 0
+antennae = 0
+wings = 0
+
+[snake]
+legs = 0
+antennae = 0
+wings = 0
+note = "Limbless, and that is the field mark."
+
+[spider]
+legs = 8
+antennae = 0
+wings = 0
+note = "Araneid: four pairs, every one attached to the cephalothorax. No antennae."
+
+[tag]
+legs = 0
+antennae = 0
+wings = 0
+
+[tick]
+legs = 8
+antennae = 0
+wings = 0
+note = "Adult ixodid has eight legs; six would draw a larva. Clustered on the front third."
+
+[turtle]
+legs = 4
+antennae = 0
+wings = 0
+
+[vial]
+legs = 0
+antennae = 0
+wings = 0
+
+[wasp]
+legs = 0
+antennae = 2
+wings = 2
+note = "Legs omitted for legibility; the pinched petiole carries the mark."

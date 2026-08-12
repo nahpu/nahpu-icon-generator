@@ -233,12 +233,12 @@ def polygon_to_svg_path(polygon):
     return " ".join(filter(None, path_segments))
 
 
-def svg_to_outline_path(filepath, weight=None, width=24.0, height=24.0):
-    """Convert an SVG file into a single filled :class:`SVGPath` ready to draw.
+def outline_geometry(filepath, weight=None):
+    """Return the painted area of an SVG as a single shapely geometry.
 
-    Strokes are expanded to outlines and unioned with any filled areas, so the
-    result is what the glyph should look like regardless of how the source was
-    drawn. ``weight`` overrides every element's own ``stroke-width``.
+    Strokes are expanded to outlines and unioned with any filled areas, so this
+    is what the icon actually covers -- the basis for both the glyph outline and
+    for measuring an icon against Material's keylines.
     """
     svg = svgelements.SVG.parse(filepath)
     geometries = []
@@ -253,7 +253,12 @@ def svg_to_outline_path(filepath, weight=None, width=24.0, height=24.0):
     if not geometries:
         raise IconBuildError(f"'{filepath}' contains no paintable geometry")
 
-    path_d = polygon_to_svg_path(unary_union(geometries))
+    return unary_union(geometries)
+
+
+def svg_to_outline_path(filepath, weight=None, width=24.0, height=24.0):
+    """Convert an SVG file into a single filled :class:`SVGPath` ready to draw."""
+    path_d = polygon_to_svg_path(outline_geometry(filepath, weight))
     if not path_d:
         raise IconBuildError(f"'{filepath}' produced empty outline geometry")
 

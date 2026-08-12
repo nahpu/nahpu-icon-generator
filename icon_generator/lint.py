@@ -2,11 +2,13 @@
 
 The rules encoded here are the mechanically checkable half of ``docs/DESIGN.md``:
 canvas size, the fixed root attribute set per variant, the constructs the font
-pipeline cannot represent, and the live-area bounds.
+pipeline cannot represent, the live-area bounds, and the limb counts declared in
+``anatomy.toml``.
 """
 
 import glob
 import os
+import tomllib
 import xml.etree.ElementTree as ET
 
 import svgelements
@@ -16,7 +18,8 @@ SVG_NS = "http://www.w3.org/2000/svg"
 CANVAS = 24.0
 #: Nothing may be painted outside the canvas.
 HARD_MIN, HARD_MAX = 0.0, CANVAS
-#: Ink outside the 2-unit padding is legal but warned about.
+#: Material's 20x20 live area inside the 24x24 grid. Ink must stay inside it;
+#: the generator scales each family about its centre until it does.
 LIVE_MIN, LIVE_MAX = 2.0, CANVAS - 2.0
 
 OUTLINED_SUFFIX = "_outlined"
@@ -49,6 +52,17 @@ ALLOWED_TAGS = {
 
 FORBIDDEN_TAGS = {"g", "use", "clipPath", "mask", "text", "image", "defs", "style"}
 FORBIDDEN_ATTRS = {"transform", "style", "class", "clip-path", "mask", "filter"}
+
+#: Roles an element may declare via `data-role`. Renderers ignore `data-*`
+#: attributes, so these are pure annotation for the anatomy check.
+KNOWN_ROLES = {"leg", "wing", "antenna", "eye", "ear", "tail", "head", "detail"}
+#: The roles `anatomy.toml` declares counts for.
+COUNTED_ROLES = ("legs", "antennae", "wings")
+ROLE_FOR_FIELD = {"legs": "leg", "antennae": "antenna", "wings": "wing"}
+
+DEFAULT_ANATOMY_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "anatomy.toml"
+)
 
 SHAPE_TYPES = (
     svgelements.Path,
@@ -109,6 +123,60 @@ def check_elements(root, errors):
                 errors.append(f"<{tag}> uses the forbidden attribute {_local(attr)}")
 
 
+def load_anatomy(path=None):
+    """Read the limb-count manifest keyed by family name."""
+    path = path or DEFAULT_ANATOMY_PATH
+    with open(path, "rb") as f:
+        return tomllib.load(f)
+
+
+def count_roles(root, errors):
+    """Count `data-role` values, checking every element after the silhouette.
+
+    The first child is the silhouette and carries no role; everything after it
+    must declare one, otherwise a limb could be added without the anatomy check
+    ever seeing it.
+    """
+    counts = dict.fromkeys(KNOWN_ROLES, 0)
+
+    for index, element in enumerate(list(root)):
+        if index == 0:
+            continue
+        role = element.get("data-role")
+        tag = _local(element.tag)
+        if role is None:
+            errors.append(f"<{tag}> after the silhouette has no data-role")
+        elif role not in KNOWN_ROLES:
+            errors.append(
+                f'<{tag}> has unknown data-role="{role}" '
+                f"(expected one of {', '.join(sorted(KNOWN_ROLES))})"
+            )
+        else:
+            counts[role] += 1
+
+    return counts
+
+
+def check_anatomy(family, counts, anatomy, errors):
+    """Compare the drawn limb counts against the manifest."""
+    spec = anatomy.get(family)
+    if spec is None:
+        errors.append(f"'{family}' has no entry in anatomy.toml")
+        return
+
+    for field in COUNTED_ROLES:
+        if field not in spec:
+            errors.append(f"anatomy.toml [{family}] is missing '{field}'")
+            continue
+        expected = spec[field]
+        actual = counts[ROLE_FOR_FIELD[field]]
+        if actual != expected:
+            errors.append(
+                f"draws {actual} {field} but anatomy.toml [{family}] declares "
+                f"{expected}"
+            )
+
+
 def check_bounds(filepath, errors, warnings):
     """Check that painted ink, stroke included, stays on the canvas."""
     try:
@@ -165,14 +233,18 @@ def check_bounds(filepath, errors, warnings):
         or painted[2] > LIVE_MAX + tol
         or painted[3] > LIVE_MAX + tol
     ):
-        warnings.append(
-            "ink enters the 2-unit padding: "
+        errors.append(
+            "ink leaves Material's 20x20 live area: "
             f"({painted[0]:.2f}, {painted[1]:.2f}) - ({painted[2]:.2f}, {painted[3]:.2f})"
         )
 
 
-def lint_file(filepath):
-    """Return ``(errors, warnings)`` for a single SVG source file."""
+def lint_file(filepath, anatomy=None):
+    """Return ``(errors, warnings)`` for a single SVG source file.
+
+    ``anatomy`` is the parsed ``anatomy.toml``; pass None to skip the limb-count
+    check (useful when linting a file in isolation).
+    """
     errors, warnings = [], []
     stem = os.path.splitext(os.path.basename(filepath))[0]
 
@@ -193,20 +265,28 @@ def lint_file(filepath):
 
     check_root_attributes(root, variant, errors)
     check_elements(root, errors)
+    counts = count_roles(root, errors)
+    if anatomy is not None:
+        check_anatomy(_family(stem), counts, anatomy, errors)
     check_bounds(filepath, errors, warnings)
     return errors, warnings
 
 
-def lint_directory(input_dir):
+def lint_directory(input_dir, anatomy=None):
     """Lint every SVG in ``input_dir``.
 
     Returns ``(results, pairing_errors)`` where ``results`` maps each file path to
-    its ``(errors, warnings)`` tuple.
+    its ``(errors, warnings)`` tuple. ``anatomy`` defaults to the checked-in
+    manifest; pass an explicit dict to override it.
     """
+    if anatomy is None:
+        anatomy = load_anatomy()
+
     svg_files = sorted(glob.glob(os.path.join(input_dir, "*.svg")))
-    results = {path: lint_file(path) for path in svg_files}
+    results = {path: lint_file(path, anatomy) for path in svg_files}
 
     stems = {os.path.splitext(os.path.basename(p))[0] for p in svg_files}
+    families = {_family(s) for s in stems if _variant(s) is not None}
     pairing_errors = []
     for stem in sorted(stems):
         variant = _variant(stem)
@@ -218,6 +298,9 @@ def lint_directory(input_dir):
             pairing_errors.append(f"'{stem}' has no matching '{counterpart}.svg'")
         elif variant == "outlined":
             pairing_errors.extend(check_pair_identity(input_dir, family))
+
+    for orphan in sorted(set(anatomy) - families):
+        pairing_errors.append(f"anatomy.toml declares '{orphan}' but no such SVG exists")
 
     return results, pairing_errors
 
@@ -247,13 +330,19 @@ def check_pair_identity(input_dir, family):
     return []
 
 
-def run_lint(input_dir):
+def run_lint(input_dir, anatomy_path=None):
     """Print a lint report for ``input_dir``. Returns True when there are no errors."""
     if not os.path.isdir(input_dir):
         print(f"Error: Input directory '{input_dir}' does not exist.")
         return False
 
-    results, pairing_errors = lint_directory(input_dir)
+    try:
+        anatomy = load_anatomy(anatomy_path)
+    except OSError as e:
+        print(f"Error: could not read the anatomy manifest: {e}")
+        return False
+
+    results, pairing_errors = lint_directory(input_dir, anatomy)
     if not results:
         print(f"No SVG files found in '{input_dir}'.")
         return False

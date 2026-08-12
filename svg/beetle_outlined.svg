@@ -1,12 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
      fill="none" stroke="currentColor" stroke-width="2"
      stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd">
-  <path d="M 12 4 c -1.2 0 -2.2 .8 -2.5 1.9 c -1.1 .3 -1.9 1.3 -1.9 2.5 v .4 c -1.3 1.4 -2.1 3.6 -2.1 6 c 0 3.9 2 7 4.5 7 h 4 c 2.5 0 4.5 -3.1 4.5 -7 c 0 -2.4 -.8 -4.6 -2.1 -6 v -.4 c 0 -1.2 -.8 -2.2 -1.9 -2.5 C 14.2 4.8 13.2 4 12 4 z" />
-  <path fill="none" d="M 12 8.8 V 21.4" />
-  <path fill="none" d="M 10.4 4.4 L 8.4 2.4" />
-  <path fill="none" d="M 13.6 4.4 L 15.6 2.4" />
-  <path fill="none" d="M 7.4 10.4 L 2.8 8.4" />
-  <path fill="none" d="M 6.4 14.4 L 2.6 14.2" />
-  <path fill="none" d="M 16.6 10.4 L 21.2 8.4" />
-  <path fill="none" d="M 17.6 14.4 L 21.4 14.2" />
+  <path d="M 12,5.18692 c -1.00935,0 -1.85047,0.672897 -2.1028,1.59813 c -0.925234,0.252336 -1.59813,1.09346 -1.59813,2.1028 l 0,0.336449 c -1.09346,1.17757 -1.76636,3.02804 -1.76636,5.04673 c 0,3.28037 1.68224,5.88785 3.78505,5.88785 l 3.36449,0 c 2.1028,0 3.78505,-2.60748 3.78505,-5.88785 c 0,-2.01869 -0.672897,-3.86916 -1.76636,-5.04673 l 0,-0.336449 c 0,-1.00935 -0.672897,-1.85047 -1.59813,-2.1028 C 13.8505,5.85981 13.0093,5.18692 12,5.18692 z" />
+  <path data-role="detail" fill="none" d="M 12,9.2243 L 12,19.8224" />
+  <path data-role="antenna" fill="none" d="M 10.6542,5.52336 L 8.97196,3.84112" />
+  <path data-role="antenna" fill="none" d="M 13.3458,5.52336 L 15.028,3.84112" />
+  <path data-role="leg" fill="none" d="M 8.13084,10.4019 L 4.26168,8.71963" />
+  <path data-role="leg" fill="none" d="M 7.28972,13.5981 L 4.09346,13.2617" />
+  <path data-role="leg" fill="none" d="M 8.13084,16.4579 L 4.76636,17.8037" />
+  <path data-role="leg" fill="none" d="M 15.8692,10.4019 L 19.7383,8.71963" />
+  <path data-role="leg" fill="none" d="M 16.7103,13.5981 L 19.9065,13.2617" />
+  <path data-role="leg" fill="none" d="M 15.8692,16.4579 L 19.2336,17.8037" />
 </svg>

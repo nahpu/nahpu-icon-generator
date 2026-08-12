@@ -1,13 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
      fill="none" stroke="currentColor" stroke-width="2"
      stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd">
-  <path d="M 19.6 12 a 7.6 7.6 0 1 0 -3.6 6.5 l -1.6 -2.6 a 4.6 4.6 0 1 1 2.2 -3.9 z" />
-  <path fill="none" d="M 17.1 6.9 L 18.7 5.3" />
-  <path fill="none" d="M 12 4.8 V 2.6" />
-  <path fill="none" d="M 6.9 6.9 L 5.3 5.3" />
-  <path fill="none" d="M 4.8 12 H 2.6" />
-  <path fill="none" d="M 6.9 17.1 L 5.3 18.7" />
-  <path fill="none" d="M 12 19.2 V 21.4" />
-  <circle fill="none" cx="18" cy="10.6" r="0.6" />
-  <path fill="none" d="M 19.4 9.6 L 21.4 8" />
+  <path d="M 18.577,12 a 6.57692,6.57692 0 1,0 -3.11538,5.625 l -1.38462,-2.25 a 3.98077,3.98077 0 1,1 1.90385,-3.375 z" />
+  <circle data-role="eye" fill="currentColor" stroke="none" cx="17.0193" cy="10.9615" r="0.649038" />
+  <path data-role="antenna" fill="none" d="M 18.4039,11.1346 L 20.1347,9.92308" />
+  <path data-role="antenna" fill="none" d="M 18.4039,12.8654 L 20.1347,14.0769" />
+  <path data-role="leg" fill="none" d="M 15.1155,6.63462 L 16.0674,4.99038" />
+  <path data-role="leg" fill="none" d="M 12.0001,5.76923 L 12.0001,3.86538" />
+  <path data-role="leg" fill="none" d="M 8.88472,6.63462 L 7.93279,4.99038" />
+  <path data-role="leg" fill="none" d="M 6.63472,8.88462 L 4.99049,7.93269" />
+  <path data-role="leg" fill="none" d="M 5.76933,12 L 3.86549,12" />
+  <path data-role="leg" fill="none" d="M 6.63472,15.1154 L 4.99049,16.0673" />
+  <path data-role="leg" fill="none" d="M 8.88472,17.3654 L 7.93279,19.0096" />
+  <path data-role="leg" fill="none" d="M 12.0001,18.2308 L 12.0001,20.1346" />
+  <path data-role="leg" fill="none" d="M 15.1155,17.3654 L 16.0674,19.0096" />
 </svg>

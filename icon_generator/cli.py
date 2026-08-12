@@ -77,6 +77,12 @@ def build_parser():
 
     lint = subparsers.add_parser("lint", help="Check SVG sources against the design contract")
     lint.add_argument("--input", "-i", default=DEFAULT_INPUT, help="Directory of SVG files")
+    lint.add_argument(
+        "--anatomy",
+        "-a",
+        default=None,
+        help="Limb-count manifest to check against (default: the repo's anatomy.toml)",
+    )
     lint.set_defaults(func=cmd_lint)
 
     return parser
@@ -139,7 +145,7 @@ def _render_specimen(font_path, **kwargs):
 
 
 def cmd_lint(args):
-    return 0 if run_lint(args.input) else 1
+    return 0 if run_lint(args.input, args.anatomy) else 1
 
 
 def main(argv=None):

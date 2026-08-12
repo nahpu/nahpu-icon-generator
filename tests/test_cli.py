@@ -28,6 +28,13 @@ def test_legacy_invocations_still_reach_build(argv, expected):
     assert normalize_argv(argv) == expected
 
 
+def _fixture_anatomy(tmp_path, family="alpha"):
+    """A one-family manifest, so lint checks the fixture rather than the real set."""
+    path = tmp_path / "anatomy.toml"
+    path.write_text(f"[{family}]\nlegs = 0\nantennae = 0\nwings = 0\n")
+    return str(path)
+
+
 def test_build_and_lint_round_trip(tmp_path):
     svg_dir = tmp_path / "svg"
     svg_dir.mkdir()
@@ -38,7 +45,17 @@ def test_build_and_lint_round_trip(tmp_path):
     assert main(["build", "-i", str(svg_dir), "-o", str(output)]) == 0
     assert output.exists()
     assert (tmp_path / "out" / "nahpu_icons.dart").exists()
-    assert main(["lint", "-i", str(svg_dir)]) == 0
+    assert main(["lint", "-i", str(svg_dir), "-a", _fixture_anatomy(tmp_path)]) == 0
+
+
+def test_lint_fails_when_the_manifest_does_not_cover_the_set(tmp_path):
+    svg_dir = tmp_path / "svg"
+    svg_dir.mkdir()
+    (svg_dir / "alpha_outlined.svg").write_text(SVG)
+    (svg_dir / "alpha_filled.svg").write_text(SVG.replace('fill="none"', 'fill="currentColor"', 1))
+
+    anatomy = _fixture_anatomy(tmp_path, family="beta")
+    assert main(["lint", "-i", str(svg_dir), "-a", anatomy]) == 1
 
 
 def test_build_fails_on_a_missing_input_directory(tmp_path):
@@ -49,7 +66,7 @@ def test_lint_fails_on_an_unpaired_icon(tmp_path):
     svg_dir = tmp_path / "svg"
     svg_dir.mkdir()
     (svg_dir / "alpha_outlined.svg").write_text(SVG)
-    assert main(["lint", "-i", str(svg_dir)]) == 1
+    assert main(["lint", "-i", str(svg_dir), "-a", _fixture_anatomy(tmp_path)]) == 1
 
 
 def test_specimen_reports_a_missing_font(tmp_path):

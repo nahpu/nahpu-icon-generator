@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-     fill="currentColor" stroke="currentColor" stroke-width="2"
-     stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd">
-  <path d="M 12 3.6 C 9.8 3.6 8 5.4 8 7.6 C 8 8.6 8.4 9.5 9 10.2 C 7 11.4 5.6 13.6 5.6 16.2 C 5.6 18.4 6.6 20.2 7.9 20.2 C 9 20.2 9.9 18.9 10.1 17.2 h 3.8 C 14.1 18.9 15 20.2 16.1 20.2 C 17.4 20.2 18.4 18.4 18.4 16.2 C 18.4 13.6 17 11.4 15 10.2 C 15.6 9.5 16 8.6 16 7.6 C 16 5.4 14.2 3.6 12 3.6 Z" />
-  <circle fill="none" cx="10" cy="6.8" r="0.7" />
-  <circle fill="none" cx="14" cy="6.8" r="0.7" />
-  <path fill="none" d="M 9 10.6 L 3.2 12.2" />
-  <path fill="none" d="M 15 10.6 L 20.8 12.2" />
-</svg>

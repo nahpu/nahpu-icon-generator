@@ -9,7 +9,7 @@ sheet is there to check.
 | Rule | Value |
 | --- | --- |
 | Canvas | `viewBox="0 0 24 24"`, `width="24" height="24"` |
-| Padding / live area | 2 units on all sides, leaving a 20x20 live area |
+| Padding / live area | 2 units on all sides, leaving a 20x20 live area (enforced) |
 | Skeleton box | draw **centrelines** inside `[3, 21]`, so the 2-unit stroke's outer edge lands on the keyline |
 | Keylines | square 20x20; circle diameter 20 at (12, 12); vertical 16x20; horizontal 20x16 |
 | Stroke width | exactly `2`, declared once on the root, never per element |
@@ -21,10 +21,22 @@ sheet is there to check.
 | Forbidden | `transform`, `<g>`, `<use>`, `style=`, `clipPath`, `mask`, `<text>`, `<image>` |
 | Allowed elements | `path`, `circle`, `ellipse`, `line`, `polyline`, `polygon`, `rect` |
 
-Ink that crosses the canvas edge is an error. Ink that merely enters the 2-unit
-padding is a warning: wide marks such as `butterfly` and `mite` are meant to
-fill the grid, so the warning is informational rather than something to chase to
-zero.
+**Both bounds are errors.** Material puts a 20x20 live area inside the 24x24
+grid, and every icon stays inside it. Strokes are centred on their path, so the
+skeleton has to sit inside `[3, 21]` for the painted ink to land inside
+`[2, 22]`.
+
+You do not have to hit this by hand. The authoring step measures each family
+**as the font builder will actually paint it** — fills unioned with expanded
+strokes — then centres it on (12, 12) and scales it onto the Material keyline.
+The lint check is the backstop.
+
+Material sets different keylines by shape, because a solid square reads larger
+than a circle inside the same box: **18 units for a shape that fills its
+bounding box, 20 for a circular one.** The authoring step interpolates between
+them using the ink's actual coverage of its bounding box, so the set stays
+optically even instead of drifting between sizes. Before this existed the icons
+ranged from 15.9 to 20 units and looked like a jumble.
 
 ## The two variants
 
@@ -68,10 +80,55 @@ An icon is built from three kinds of element:
 3. **Details** — open paths carrying `fill="none"`, so they are stroke-only:
    legs, antennae, tails, eyes, wing veins.
 
-Eyes are `<circle r="0.6" fill="none">`, which strokes into a solid dot in the
-outlined variant and disappears into the body in the filled one. That is the
-Material convention. Never use the zero-length `v.01` round-cap trick — it is
-fragile under stroke expansion.
+Eyes are **filled, not stroked**:
+
+```xml
+<circle data-role="eye" fill="currentColor" stroke="none" cx="16" cy="13.8" r="0.75" />
+```
+
+A stroked circle is centred on its path, so it renders as a tiny donut with a
+pinhole rather than a dot. Material draws the eye as a solid disc about 1.5
+units across, which is what `r="0.75"` filled gives. An eye socket that is meant
+to read as a *hole* — `skull`, `fossil` — is the opposite: a stroked ring with a
+radius large enough that the counter survives.
+
+Never use the zero-length `v.01` round-cap trick; it is fragile under stroke
+expansion.
+
+### Roles
+
+Every element **after** the silhouette carries a `data-role`, drawn from:
+
+`leg` · `wing` · `antenna` · `eye` · `ear` · `tail` · `head` · `detail`
+
+`data-*` attributes are valid XML and ignored by every renderer, `svgelements`
+and the font pipeline included — these files never reach Flutter. They exist so
+`anatomy.toml` can be checked mechanically. `detail` is the catch-all for
+everything that is not a countable body part: an elytra split, a mouth line, a
+gill, a rib, a shell rim, a wing strut.
+
+## Anatomy
+
+NAHPU is a natural-history app, so the icons are read by people who know what
+the animals look like. `anatomy.toml` records how many legs, antennae and wings
+each family draws, and `main.py lint` verifies it against the sources.
+
+The counts are of **drawn elements**, not of the animal's real anatomy, because
+the two diverge for three legitimate reasons:
+
+- **View.** A flea in lateral profile shows three legs, not six.
+- **Silhouette.** A feature drawn into the silhouette path cannot be counted — a
+  butterfly's wings are part of its outline, so `wings = 0` there. **Any limb
+  that has to be counted must be a stroked element.** A limb drawn as a
+  silhouette lobe is invisible to the check.
+- **Legibility.** The winged insects (`fly`, `wasp`, `butterfly`, `moth`,
+  `dragonfly`) omit legs deliberately; six legs under those wings is mud at
+  16 px. Those entries carry a `note` saying so, which is the point of the file:
+  an omission becomes a recorded decision instead of something indistinguishable
+  from an oversight.
+
+Getting a count wrong is a lint **error**, so a future edit that drops a spider
+leg fails the build rather than shipping.
 
 ### Things that bite
 
@@ -84,29 +141,52 @@ fragile under stroke expansion.
   this reason, and `fossil` carries the skeleton on a solid skull rather than
   inside a slab.
 - **Shallow concavity fills in.** A notch narrower than 2 units closes under
-  dilation. The gap between the frog's hind legs is 3.8 units so that roughly
-  1.8 units survive.
+  dilation, so a gap you want to survive needs to start at about 3.8 units.
 - **`fill-rule="evenodd"` applies within a single element.** Overlapping
   subpaths of one path knock holes in each other; that is why `ant` and
   `spider` keep their body segments apart and let the strokes bridge the gap.
 
+## View convention
+
+Vertebrates are drawn in **lateral profile wherever a side view is
+recognisable** — `bird`, `mouse`, `rat`, `shrew`, `lizard`, `salamander`,
+`fish`, `fossil`, `skull`.
+
+**Dorsal or head-on only where that is the diagnostic view**: `turtle` from
+above, `snake` as a coil, and `frog` and `bat` head-on. A bat in profile is a
+lump; with its wings spread it is unmistakable. The same is true of a frog's
+face.
+
+Some marks are **shape-led**: `mouse`, `rat` and `shrew` draw no limbs at all,
+because at 24 px four leg strokes fight with the body outline instead of
+supporting it. Body proportion, ear size and tail carry the identification, and
+`anatomy.toml` records `legs = 0` with a note so the omission is on the record.
+
+The view drives the limb count, which is why `anatomy.toml` counts what is drawn
+rather than what the animal has.
+
 ## Telling similar taxa apart
 
-The single biggest failure of the previous icon set was that mite and tick, and
+The single biggest failure of the original icon set was that mite and tick, and
 mouse and rat, were indistinguishable. Each mark carries a deliberate field
 mark:
 
-- **mite** round body, legs radiating evenly, no capitulum ·
-  **tick** teardrop body with a forward capitulum, legs clustered on the front
-  third · **spider** two-part body with long, sharply bent, high-arching legs ·
+- **mite** round idiosoma, eight legs swept forward and back, no capitulum ·
+  **tick** teardrop idiosoma with a forward capitulum and its eight legs
+  clustered on the front third · **spider** two-part body with eight long,
+  sharply bent legs, all on the cephalothorax ·
   **flea** laterally compressed teardrop with one oversized Z-shaped jumping
   leg · **louse** flat broad body, short stout hooked legs.
 - **mouse** large round ear, short tail · **rat** small ear, long curling tail ·
   **shrew** no visible ear, long pointed snout.
-- **snake** limbless S-coil · **lizard** S-curve with four bent legs and a long
-  tail · **salamander** blunt head, smooth body, short splayed legs ·
-  **frog** head-on with bulging eyes · **amphibian** frog from above (this is
-  the generic herpetofauna mark NAHPU uses).
+- **snake** limbless S-coil · **lizard** S-curve, four bent legs, tail longer
+  than the trunk · **salamander** blunt head, smooth body, four sprawling legs ·
+  **frog** head-on with bulging eyes and folded hind limbs (this is the
+  herpetofauna mark NAHPU uses).
+- **bird** is a parrot in lateral profile: crest, hooked bill and a tail longer
+  than the body.
+- **bat** head-on, wings spread on elongated finger struts — the struts are what
+  separate a bat wing from a moth wing at this size.
 - **beetle** dorsal oval with a single centre elytra split · **butterfly** broad
   rounded wings, upper pair larger · **moth** narrower swept triangular wings ·
   **fly** two wings only · **wasp** pinched waist · **ant** three separated body
@@ -114,14 +194,18 @@ mark:
 
 ## Adding an icon
 
-1. Draw `{family}_outlined.svg`.
+1. Draw `{family}_outlined.svg`, giving every element after the silhouette a
+   `data-role`.
 2. Copy it to `{family}_filled.svg` and change only the root `fill` to
    `currentColor`.
-3. `uv run python main.py lint`
-4. `uv run python main.py build --specimen`
-5. Open the specimen sheet and check the icon on the size-ramp pages. If it is a
+3. Add a `[{family}]` entry to `anatomy.toml` with the legs, antennae and wings
+   the mark draws, plus a `note` if any of those counts is not what the animal
+   actually has.
+4. `uv run python main.py lint`
+5. `uv run python main.py build --specimen`
+6. Open the specimen sheet and check the icon on the size-ramp pages. If it is a
    smudge at 16 pt, it is not finished.
-6. Commit both SVGs together.
+7. Commit both SVGs and `anatomy.toml` together.
 
 Remember that codepoints are assigned in alphabetical filename order, so adding
 a family renumbers every icon after it. See the README.
